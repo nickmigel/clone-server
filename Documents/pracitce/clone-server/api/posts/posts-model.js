@@ -10,5 +10,9 @@ function addPost(body, id) {
 }
 
 function getFeed(id) {
-    //to do create joining table for followed and following
+    return db('users')
+        .where({ id })
+        .join('following', 'users.id', '=', 'following.user_id')
+        .join('posts', 'following.follow_id', '=', 'posts.user_id')
+        .select('posts.body')
 }
